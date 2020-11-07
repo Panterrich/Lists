@@ -1,0 +1,53 @@
+digraph G {
+graph [bgcolor = Snow2]
+rankdir = LR;
+	0 [shape = record, label = " nan | { 0 | 0 | 0 }", style = filled, color = dodgerblue4, fillcolor = mediumaquamarine]
+	1 [shape = record, label = " nan | { -1 | 1 | 2 }", style = filled, color = darkgreen, fillcolor = lightgreen]
+	2 [shape = record, label = " nan | { -1 | 2 | 3 }", style = filled, color = darkgreen, fillcolor = lightgreen]
+	3 [shape = record, label = " nan | { -1 | 3 | 4 }", style = filled, color = darkgreen, fillcolor = lightgreen]
+	4 [shape = record, label = " nan | { -1 | 4 | 5 }", style = filled, color = darkgreen, fillcolor = lightgreen]
+	5 [shape = record, label = " nan | { -1 | 5 | 6 }", style = filled, color = darkgreen, fillcolor = lightgreen]
+	6 [shape = record, label = " nan | { -1 | 6 | 7 }", style = filled, color = darkgreen, fillcolor = lightgreen]
+	7 [shape = record, label = " nan | { -1 | 7 | 8 }", style = filled, color = darkgreen, fillcolor = lightgreen]
+	8 [shape = record, label = " nan | { -1 | 8 | 9 }", style = filled, color = darkgreen, fillcolor = lightgreen]
+	9 [shape = record, label = " nan | { -1 | 9 | 10 }", style = filled, color = darkgreen, fillcolor = lightgreen]
+	10 [shape = record, label = " nan | { -1 | 10 | 11 }", style = filled, color = darkgreen, fillcolor = lightgreen]
+	11 [shape = record, label = " nan | { -1 | 11 | 12 }", style = filled, color = darkgreen, fillcolor = lightgreen]
+	12 [shape = record, label = " nan | { -1 | 12 | 13 }", style = filled, color = darkgreen, fillcolor = lightgreen]
+	13 [shape = record, label = " nan | { -1 | 13 | 14 }", style = filled, color = darkgreen, fillcolor = lightgreen]
+	14 [shape = record, label = " nan | { -1 | 14 | 15 }", style = filled, color = darkgreen, fillcolor = lightgreen]
+	15 [shape = record, label = " nan | { -1 | 15 | 16 }", style = filled, color = darkgreen, fillcolor = lightgreen]
+	16 [shape = record, label = " nan | { -1 | 16 | 17 }", style = filled, color = darkgreen, fillcolor = lightgreen]
+	17 [shape = record, label = " nan | { -1 | 17 | 18 }", style = filled, color = darkgreen, fillcolor = lightgreen]
+	18 [shape = record, label = " nan | { -1 | 18 | 19 }", style = filled, color = darkgreen, fillcolor = lightgreen]
+	19 [shape = record, label = " nan | { -1 | 19 | 20 }", style = filled, color = darkgreen, fillcolor = lightgreen]
+	20 [shape = record, label = " nan | { -1 | 20 | 0 }", style = filled, color = darkgreen, fillcolor = lightgreen]
+	0 -> 0 [color = dodgerblue4]; 
+	0 -> 0 [color = dodgerblue4]; 
+	1 -> 2 [color = darkgreen]; 
+	2 -> 3 [color = darkgreen]; 
+	3 -> 4 [color = darkgreen]; 
+	4 -> 5 [color = darkgreen]; 
+	5 -> 6 [color = darkgreen]; 
+	6 -> 7 [color = darkgreen]; 
+	7 -> 8 [color = darkgreen]; 
+	8 -> 9 [color = darkgreen]; 
+	9 -> 10 [color = darkgreen]; 
+	10 -> 11 [color = darkgreen]; 
+	11 -> 12 [color = darkgreen]; 
+	12 -> 13 [color = darkgreen]; 
+	13 -> 14 [color = darkgreen]; 
+	14 -> 15 [color = darkgreen]; 
+	15 -> 16 [color = darkgreen]; 
+	16 -> 17 [color = darkgreen]; 
+	17 -> 18 [color = darkgreen]; 
+	18 -> 19 [color = darkgreen]; 
+	19 -> 20 [color = darkgreen]; 
+	20 -> 0 [color = darkgreen]; 
+	HEAD [style = filled, color = black, fillcolor = salmon1]; 
+	TAIL [style = filled, color = black, fillcolor = salmon1]; 
+	FREE [style = filled, color = black, fillcolor = salmon1]; 
+	HEAD -> 0 [color = deeppink]; 
+	TAIL -> 0 [color = deeppink]; 
+	FREE -> 1 [color = deeppink]; 
+}
