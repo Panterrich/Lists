@@ -9,36 +9,76 @@ void List_graph(struct List* list)
     FILE* text = fopen("graph.dot", "w");
 
     fprintf(text, "digraph G {\n"            
-                  "graph [bgcolor = Snow2]\n"  
+                  "graph [bgcolor = Snow2]\n" 
                   "rankdir = LR;\n");
 
-    fprintf(text, "\t%lu [shape = record, label = \" %lg | { %ld | %ld | %ld }\", style = filled, color = dodgerblue4, fillcolor = mediumaquamarine]\n", 
+    fprintf(text, "\t%lu [shape = plaintext, label =<\n"
+                          "\t<table>\n"
+                          "\t<tr>\n" 
+                          "\t\t<td colspan=\"3\"> %lg </td>\n"
+                          "\t </tr>\n"
+                          "\t <tr>\n"
+                          "\t\t <td> %ld </td>\n"
+                          "\t\t <td> %ld </td>\n"
+                          "\t\t <td> %ld </td>\n"
+                          "\t </tr>\n"
+                          "\t</table>>, style = filled, color = dodgerblue4, fillcolor = mediumaquamarine]\n", 
                     0, (list->data)[0].value, (list->data)[0].prev, 0, (list->data)[0].next);
 
-    for (size_t i = 1; i <= list->capacity; ++i)
+   
+    for (size_t index = 1; index <= list->capacity; ++index)
     {   
-        if ((!isnan((list->data)[i].value)) && ((list->data)[i].next != -1) && ((list->data)[i].prev != -1))
+        if ((!isnan((list->data)[index].value)) && ((list->data)[index].next != -1) && ((list->data)[index].prev != -1))
         {
-            fprintf(text, "\t%lu [shape = record, label = \" %lg | { %ld | %ld | %ld }\", style = filled, color = deepskyblue2, fillcolor = lightskyblue]\n", 
-                    i, (list->data)[i].value, (list->data)[i].prev, i, (list->data)[i].next);
+           fprintf(text, "\t%lu [shape = plaintext, label =<\n"
+                          "\t<table>\n"
+                          "\t<tr>\n" 
+                          "\t\t<td colspan=\"3\"> %lg </td>\n"
+                          "\t </tr>\n"
+                          "\t <tr>\n"
+                          "\t\t <td> %ld </td>\n"
+                          "\t\t <td> %ld </td>\n"
+                          "\t\t <td> %ld </td>\n"
+                          "\t </tr>\n"
+                          "\t</table>>, style = filled, color = deepskyblue2, fillcolor = lightskyblue]\n", 
+                    index, (list->data)[index].value, (list->data)[index].prev, index, (list->data)[index].next);
         }
 
-        else if (((isnan((list->data)[i].value)) && ((list->data)[i].next != -1) && ((list->data)[i].prev == -1)))
+        else if (((isnan((list->data)[index].value)) && ((list->data)[index].next != -1) && ((list->data)[index].prev == -1)))
         {
-            fprintf(text, "\t%lu [shape = record, label = \" %lg | { %ld | %ld | %ld }\", style = filled, color = darkgreen, fillcolor = lightgreen]\n", 
-                    i, (list->data)[i].value, (list->data)[i].prev, i, (list->data)[i].next);
+             fprintf(text, "\t%lu [shape = plaintext, label =<\n"
+                          "\t<table>\n"
+                          "\t<tr>\n" 
+                          "\t\t<td colspan=\"3\"> %lg </td>\n"
+                          "\t </tr>\n"
+                          "\t <tr>\n"
+                          "\t\t <td> %ld </td>\n"
+                          "\t\t <td> %ld </td>\n"
+                          "\t\t <td> %ld </td>\n"
+                          "\t </tr>\n"
+                          "\t</table>>, style = filled, color = darkgreen, fillcolor = lightgreen]\n", 
+                    index, (list->data)[index].value, (list->data)[index].prev, index, (list->data)[index].next);
         }
 
         else
         {
-            fprintf(text, "\t%lu [shape = record, label = \" %lg | { %ld | %ld | %ld }\", style = filled, color = red,  fillcolor = lightcoral]\n", 
-                    i, (list->data)[i].value, (list->data)[i].prev, i, (list->data)[i].next);
+             fprintf(text, "\t%lu [shape = plaintext, label =<\n"
+                          "\t<table>\n"
+                          "\t<tr>\n" 
+                          "\t\t<td colspan=\"3\"> %lg </td>\n"
+                          "\t </tr>\n"
+                          "\t <tr>\n"
+                          "\t\t <td> %ld </td>\n"
+                          "\t\t <td> %ld </td>\n"
+                          "\t\t <td> %ld </td>\n"
+                          "\t </tr>\n"
+                          "\t</table>>, style = filled, color = red,  fillcolor = lightcoral]\n", 
+                    index, (list->data)[index].value, (list->data)[index].prev, index, (list->data)[index].next);
         }
     }
-
+    
     fprintf(text, "\t%ld -> %ld [color = dodgerblue4]; \n", 0, (list->data)[0].next);
     fprintf(text, "\t%ld -> %ld [color = dodgerblue4]; \n", 0, (list->data)[0].prev);
-
 
     for (size_t i = 1; i <= list->capacity; ++i)
     {   
@@ -48,19 +88,31 @@ void List_graph(struct List* list)
             fprintf(text, "\t%ld -> %ld [color = darkgreen]; \n", i, (list->data)[i].next);
         }
         
-        else if ((!isnan((list->data)[i].value)) && (!isnan((list->data)[(list->data)[i].next].value)) && ((list->data)[(list->data)[i].next].prev == i))
+        else if (!isnan((list->data)[i].value))
         {
-            fprintf(text, "\t%ld -> %ld [color = deepskyblue2]; \n", i, (list->data)[i].next);
-        }
+            if ((!isnan((list->data)[(list->data)[i].next].value)) && ((list->data)[(list->data)[i].next].prev == i))
+            {
+                fprintf(text, "\t%ld -> %ld [color = deepskyblue2]; \n", i, (list->data)[i].next);
+                fprintf(text, "\t%ld -> %ld [color = deepskyblue2]; \n", (list->data)[i].next, i);
+            }
 
-        else if ((!isnan((list->data)[i].value)) && ((list->data)[i].next == 0) && (i == list->tail))
-        {
-            fprintf(text, "\t%ld -> %ld [color = deepskyblue2]; \n", i, (list->data)[i].next);
+            else if  (((list->data)[i].next == 0) && (i == list->tail))
+            {
+                fprintf(text, "\t%ld -> %ld [color = deepskyblue2]; \n", i, (list->data)[i].next);
+                fprintf(text, "\t%ld -> %ld [color = deepskyblue2]; \n", (list->data)[i].next, i);
+            }
+
+            else 
+            {
+                fprintf(text, "\t%ld -> %ld [color = darkred]; \n", i, (list->data)[i].next);
+                fprintf(text, "\t%ld -> %ld [color = darkred]; \n", (list->data)[i].next, i);
+            }
         }
 
         else 
         {
             fprintf(text, "\t%ld -> %ld [color = darkred]; \n", i, (list->data)[i].next);
+            fprintf(text, "\t%ld -> %ld [color = darkred]; \n", (list->data)[i].next, i);
         }
     }
 
@@ -71,6 +123,42 @@ void List_graph(struct List* list)
     fprintf(text, "\tHEAD -> %ld [color = deeppink]; \n", list->head);
     fprintf(text, "\tTAIL -> %ld [color = deeppink]; \n", list->tail);
     fprintf(text, "\tFREE -> %ld [color = deeppink]; \n", list->first_free);
+
+    // for (size_t rank_index = 1; rank_index <= (list->size / 10 + (list->size % 10 != 0)); ++rank_index)
+    // {    
+    //     fprintf(text, "\t{rank = same;");
+
+    //     static size_t counter_edge = 1;
+
+    //     for (static size_t current_element = List_head_element(list); (counter_edge % 11 != 0) && (counter_edge - counter_edge / 11 <= list->size); 
+    //         current_element = List_next_element(list, current_element), ++counter_edge)
+    //     {
+    //         fprintf(text, " %ld;", current_element);
+    //     }  
+        
+    //     ++counter_edge;
+
+    //     fprintf(text, "}\n");
+    // }
+
+    // for (size_t rank_index = 1; rank_index <= ((list->capacity - list->size) / 10 + ((list->capacity - list->size) % 10 != 0)); ++rank_index)
+    // {    
+    //     fprintf(text, "\t{rank = same;");
+
+    //     static size_t counter_edge_free = 1;
+
+    //     for (static size_t current_element = List_free_mem(list); (counter_edge_free % 11 != 0) && (counter_edge_free - counter_edge_free / 11 <= list->capacity - list->size); 
+    //         current_element = List_next_element(list, current_element), ++counter_edge_free)
+    //     {
+    //         fprintf(text, " %ld;", current_element);
+    //     }  
+        
+    //     ++counter_edge_free;
+
+    //     fprintf(text, "}\n");
+    // }
+
+    // fprintf(text, "\t{rank = same; 0}\n");
 
     fprintf(text, "}\n");
 
@@ -124,41 +212,11 @@ size_t List_insert_before(struct List* list, size_t number, element_t value)
     if (list->size == list->capacity)
     {   
         List_resize(list);
-        List_graph(list);
     }
 
-    if (number == list->head)
+    if (list->size == 0)
     {
-        return List_insert_end(list, value);
-    }
-
-    else
-    {
-        size_t newpos = List_free_mem(list);
-        
-        list->first_free = (list->data)[newpos].next;
-
-        (list->data)[newpos].prev = (list->data)[number].prev;
-        (list->data)[List_prev_element(list, number)].next = newpos;
-
-        (list->data)[newpos].next = number;
-        (list->data)[number].prev = newpos;
-    
-
-        (list->data)[newpos].value = value;
-
-        ++(list->size);
-
-        return newpos;
-    }
-}
-
-size_t List_insert_after(struct List* list, size_t number, element_t value)
-{   
-    if (list->size == list->capacity)
-    {   
-        List_resize(list);
-        List_graph(list);
+        return List_insert_first(list, value);
     }
 
     if (number == list->head)
@@ -166,32 +224,70 @@ size_t List_insert_after(struct List* list, size_t number, element_t value)
         return List_insert_begin(list, value);
     }
 
-    else
-    {
-        size_t newpos = List_free_mem(list);
-        
-        list->first_free = (list->data)[newpos].next;
-
-        (list->data)[newpos].next = (list->data)[number].next;
-        (list->data)[List_next_element(list, number)].prev = newpos;
-
-        (list->data)[newpos].prev = number;
-        (list->data)[number].next = newpos;
+    size_t newpos = List_free_mem(list);
     
+    list->first_free = (list->data)[newpos].next;
 
-        (list->data)[newpos].value = value;
+    (list->data)[newpos].prev = (list->data)[number].prev;
+    (list->data)[List_prev_element(list, number)].next = newpos;
 
-        ++(list->size);
+    (list->data)[newpos].next = number;
+    (list->data)[number].prev = newpos;
 
-        return newpos;
+
+    (list->data)[newpos].value = value;
+
+    ++(list->size);
+
+    return newpos;
+}
+
+size_t List_insert_after(struct List* list, size_t number, element_t value)
+{   
+    if (list->size == list->capacity)
+    {   
+        List_resize(list);
     }
+
+    if (list->size == 0)
+    {
+        return List_insert_first(list, value);
+    }
+
+    if (number == list->tail)
+    {
+        return List_insert_end(list, value);
+    }
+
+    
+    size_t newpos = List_free_mem(list);
+    
+    list->first_free = (list->data)[newpos].next;
+
+    (list->data)[newpos].next = (list->data)[number].next;
+    (list->data)[List_next_element(list, number)].prev = newpos;
+
+    (list->data)[newpos].prev = number;
+    (list->data)[number].next = newpos;
+
+
+    (list->data)[newpos].value = value;
+
+    ++(list->size);
+
+    return newpos;
 }
 
 size_t List_insert_begin(struct List* list, element_t value)
-{
+{   
     if (list->size == list->capacity)
     {
         List_resize(list);
+    }
+
+    if (list->size == 0)
+    {
+        return List_insert_first(list, value);
     }
 
     size_t newpos = List_free_mem(list);
@@ -200,22 +296,12 @@ size_t List_insert_begin(struct List* list, element_t value)
 
     (list->data)[newpos].prev = (list->data)[List_head_element(list)].prev;
     (list->data)[newpos].next = List_head_element(list);
-
-    if (list->size != 0)
-    {
-        (list->data)[List_head_element(list)].prev = newpos;
-    }
-
+    (list->data)[List_head_element(list)].prev = newpos;
     (list->data)[newpos].value = value;
 
     ++(list->size);
     
     list->head = newpos;
-
-    if (list->size == 1)
-    {
-        list->tail = newpos;
-    }
 
     return newpos;
 }
@@ -227,28 +313,23 @@ size_t List_insert_end(struct List* list, element_t value)
         List_resize(list);
     }
 
+    if (list->size == 0)
+    {
+        return List_insert_first(list, value);
+    }
+
     size_t newpos = List_free_mem(list);
     
     list->first_free = (list->data)[newpos].next;
 
     (list->data)[newpos].prev = List_tail_element(list);
     (list->data)[newpos].next = 0;
-
-    if (list->size != 0)
-    {
-        (list->data)[List_tail_element(list)].next = newpos;
-    }
-    
+    (list->data)[List_tail_element(list)].next = newpos;
     (list->data)[newpos].value = value;
 
     ++(list->size);
     
     list->tail = newpos;
-
-    if (list->size == 1)
-    {
-        list->head = newpos;
-    }
 
     return newpos;
 }
@@ -289,7 +370,7 @@ void List_clear(struct List* list)
     (list->data)[0].next  = 0;
     (list->data)[0].prev  = 0;
 
-    List_free_filling(list, 1, list->capacity);
+    List_free_filling(list->data, 1, list->capacity);
 }
 
 void List_resize(struct List* list)
@@ -310,7 +391,7 @@ void List_resize(struct List* list)
         {
             list->data = new_pointer;
 
-            List_free_filling(list, list->capacity + 1, 20);
+            List_free_filling(list->data, list->capacity + 1, 20);
 
             list->first_free = list->capacity + 1;
             list->capacity   = 20;
@@ -339,7 +420,7 @@ void List_resize(struct List* list)
                 {   
                     list->data = new_pointer;
 
-                    List_free_filling(list, list->capacity + 1, list->capacity + 1);
+                    List_free_filling(list->data, list->capacity + 1, list->capacity + 1);
 
                     list->first_free = list->capacity + 1;
                     list->capacity   = list->capacity + 1;
@@ -350,7 +431,7 @@ void List_resize(struct List* list)
             {
                 list->data = new_pointer;
 
-                List_free_filling(list, (list->capacity) + 1, 1.5 * (list->capacity));
+                List_free_filling(list->data, (list->capacity) + 1, 1.5 * (list->capacity));
 
                 list->first_free = list->capacity + 1;
                 list->capacity   = 1.5 * list->capacity;
@@ -361,7 +442,7 @@ void List_resize(struct List* list)
         {
             list->data = new_pointer;
 
-            List_free_filling(list, (list->capacity) + 1, 2 * (list->capacity));
+            List_free_filling(list->data, (list->capacity) + 1, 2 * (list->capacity));
 
             list->first_free = list->capacity + 1;
             list->capacity   = 2 * list->capacity;
@@ -369,9 +450,61 @@ void List_resize(struct List* list)
     }
 }
 
+size_t List_insert_first(struct List* list, element_t value)
+{
+    if (list->size == list->capacity)
+    {
+        List_resize(list);
+    }
+
+    size_t newpos = List_free_mem(list);
+
+    list->first_free = (list->data)[newpos].next;
+
+    (list->data)[newpos].prev  = 0;
+    (list->data)[newpos].next  = 0;
+    (list->data)[newpos].value = value;
+
+    ++(list->size);
+
+    list->head = newpos;
+    list->tail = newpos;
+
+    return newpos;
+}
+
 void List_sorted(struct List* list)
 {
+    List_t* new_pointer = (List_t*) calloc (list->capacity + 1, sizeof(List_t));
 
+    new_pointer[0].next  = 0;
+    new_pointer[0].prev  = 0;
+    new_pointer[0].value = Poison;
+
+    for (size_t index = 1, current_element = List_head_element(list); index <= list->size; ++index, current_element = (list->data)[current_element].next)
+    {
+        new_pointer[index].value = (list->data)[current_element].value;
+    }
+
+
+    for (size_t index = 1; index <= list->size; ++index)
+    {
+        new_pointer[index].next = (index + 1) % (list->size + 1);
+        new_pointer[index].prev = (index - 1);
+    }
+
+    list->head = 1;
+    list->tail = list->size;
+
+    List_free_filling(new_pointer, list->size + 1, list->capacity);
+
+    list->first_free = list->size + 1;
+
+    List_t* old_pointer = list->data;
+    
+    list->data = new_pointer;
+
+    free(old_pointer);
 }
 
 size_t List_find_first_value(struct List* list, element_t value)
@@ -522,18 +655,18 @@ const char* Text_ERROR(struct List* list)
     }
 }
 
-void List_free_filling(struct List* list, size_t begin, size_t end)
+void List_free_filling(struct List_t* data, size_t begin, size_t end)
 {
     for (size_t index = begin; index < end; ++index)
     {
-        (list->data)[index].value = Poison;
-        (list->data)[index].next  = index + 1;
-        (list->data)[index].prev  = -1;
+        data[index].value = Poison;
+        data[index].next  = index + 1;
+        data[index].prev  = -1;
     }
 
-    (list->data)[end].value = Poison;
-    (list->data)[end].next  = 0;
-    (list->data)[end].prev  = -1;
+    data[end].value = Poison;
+    data[end].next  = 0;
+    data[end].prev  = -1;
 }
 
 int List_ERROR(struct List* list)

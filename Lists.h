@@ -101,13 +101,15 @@ void List_construct(struct List* list, size_t initial_capacity);
 
 void List_resize(struct List* list);
 
-void List_free_filling(struct List* list, size_t begin, size_t end);
+void List_free_filling(struct List_t* data, size_t begin, size_t end);
 
 void List_clear(struct List* list);
 
 void List_sorted(struct List* list);
 
 void List_destruct(struct List* list);
+
+size_t List_insert_first(struct List* list, element_t value);
 
 size_t List_insert_before(struct List* list, size_t number, element_t value);
 
