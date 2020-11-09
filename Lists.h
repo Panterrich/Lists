@@ -17,17 +17,17 @@
                                 if (list->data != nullptr)                                                              \
                                 {                                                                                       \
                                     List_graph(list);                                                                   \
-                                            }                                                                                       \
-                                                                                                                                    \
-                                            abort();                                                                                \
-                                            }
+                                }                                                                                       \
+                                                                                                                        \
+                                    abort();                                                                            \
+                                }
 
-            #define LIST_CONSTUCT(list, capacity) (list)->name = #list;               \
-                                                List_construct(list, capacity)
+#define LIST_CONSTRUCT(list, capacity) (list)->name = #list;               \
+                                    List_construct(list, capacity)
 
-            #define case_of_switch(enum_const) case enum_const: return #enum_const;
+#define case_of_switch(enum_const) case enum_const: return #enum_const;
 
-            //======================================================================================================================
+//======================================================================================================================
 
 typedef double element_t;
 const double Poison = NAN;
@@ -37,35 +37,37 @@ const double Poison = NAN;
 enum ERRORS
 {
     NEGATIVE_CAPACITY = 1,
-    NEGATIVE_SIZE,
-    NEGATIVE_HEAD, 
-    NEGATIVE_TAIL,
+    NEGATIVE_SIZE     = 2,
+    NEGATIVE_HEAD     = 3, 
+    NEGATIVE_TAIL     = 4,
 
-    SIZE_MORE_CAPACITY,
-    HEAD_MORE_CAPACITY,
-    TAIL_MORE_CAPACITY,
+    SIZE_MORE_CAPACITY = 5,
+    HEAD_MORE_CAPACITY = 6,
+    TAIL_MORE_CAPACITY = 7,
 
-    NULLPTR_DATA,
+    NULLPTR_DATA = 8,
 
-    DAMADED_SERVICE_CELL,
+    DAMADED_SERVICE_CELL = 9,
 
-    WRONG_HEAD,
-    WRONG_TAIL,
+    WRONG_HEAD = 10,
+    WRONG_TAIL = 11,
     
-    WRONG_VALUE,
+    WRONG_VALUE = 12,
 
-    WRONG_SIZE_NEXT,
-    WRONG_SIZE_PREV,
+    WRONG_SIZE_NEXT = 13,
+    WRONG_SIZE_PREV = 14,
 
-    WRONG_LINK_NEXT,
-    WRONG_LINK_PREV,
-    WRONG_DOUBLE_LINK,
-    WRONG_FREE_LINK,
+    WRONG_LINK_NEXT   = 15,
+    WRONG_LINK_PREV   = 16,
+    WRONG_DOUBLE_LINK = 17,
+    WRONG_FREE_LINK   = 18,
+
+    WRONG_SORTED = 19,
     
-    WRONG_NUMBER_POISON_NEXT,
-    WRONG_NUMBER_POISON_PREV,
+    WRONG_NUMBER_POISON_NEXT = 20,
+    WRONG_NUMBER_POISON_PREV = 21,
 
-    OUT_OF_MEMORY,
+    OUT_OF_MEMORY = 22,
 };
 
 //======================================================================================================================
@@ -91,6 +93,8 @@ struct List
     struct List_t* data; 
 
     size_t first_free;
+
+    int sorted;
 
     int error; 
 };
@@ -121,11 +125,13 @@ size_t List_insert_end(struct List* list, element_t value);
 
 void List_delete_element(struct List* list, size_t number);
 
-element_t List_find_element(struct List* list, element_t number);
+element_t List_find_value_by_logical_index(struct List* list, size_t number);
 
 size_t List_find_value(struct List* list, element_t value);
 
-size_t List_find_number(struct List* list, size_t number);
+size_t List_find_phys_number_by_logical_index(struct List* list, size_t number);
+
+size_t List_find_logical_index_by_phys_number(struct List* list, size_t number);
 
 size_t List_free_mem(struct List* list);
 
@@ -142,6 +148,8 @@ size_t List_tail_element(struct List* list);
 void Null_check(struct List* list);
 
 int List_ERROR(struct List* list);
+
+int List_validator(struct List* list);
 
 void List_dump(struct List* list, FILE* file);
 
