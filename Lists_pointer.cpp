@@ -277,7 +277,7 @@ void List_pointer_graph(struct List_pointer* list)
 {
     assert(list != nullptr);
 
-    FILE* text = fopen("graph.dot", "w");
+    FILE* text = fopen("graph_pointer.dot", "w");
 
     fprintf(text, "digraph G {\n"            
                   "graph [bgcolor = Snow2]\n" 
@@ -365,6 +365,6 @@ void List_pointer_graph(struct List_pointer* list)
 
     fclose(text);
 
-    system("dot -Tjpeg -ograph.jpeg graph.dot");
-    system("gwenview graph.jpeg");
+    system("dot -Tjpeg -ograph_pointer.jpeg graph_pointer.dot");
+    system("gwenview graph_pointer.jpeg");
 }

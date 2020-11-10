@@ -265,8 +265,8 @@ void List_graph(struct List* list)
 
     system("dot -Tjpeg -ograph_phys.jpeg graph_phys.dot");
 
-    system("convert graph_log.jpeg graph_phys.jpeg -append graph.jpeg");
-    system("gwenview graph.jpeg");
+    system("convert graph_log.jpeg graph_phys.jpeg -append graph_array.jpeg");
+    system("gwenview graph_array.jpeg");
 }
 
 void List_construct(struct List* list, size_t initial_capacity)
